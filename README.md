@@ -15,7 +15,7 @@ Os arquivos que contem os dados de login são no formato Json, abaixo alguns det
 
 ### Manual com explicação detalhada para cada coluna do arquivo json retornado da API
 
- <p> Propriedades do cabeçalho do arquivo JSON <p> 
+ <p> Propriedades do cabeçalho do arquivo <p> 
   <div class="wy-table-responsive" wfd-id="159"><table border="1" class="docutils">
 <colgroup>
 <col width="16%">
