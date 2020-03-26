@@ -13,7 +13,7 @@ Os arquivos que contem os dados de login são no formato Json, abaixo alguns det
 
 + Obs: no script o pacote responsável por ler arquivos no formato Json é o "jsonlite"
 
-### Manual com explicação detalhada para cada conumna do arquivo json retornado da API
+### Manual com explicação detalhada para cada coluna do arquivo json retornado da API
 
  <p> Propriedades do cabeçalho do arquivo JSON <p> 
   <div class="wy-table-responsive" wfd-id="159"><table border="1" class="docutils">
@@ -40,16 +40,12 @@ All vectors represent the state of a vehicle with the interval
 <td>The state vectors.</td>
 </tr>
 </tbody>
-</table></div>
+</table></div>  
   
-  
 
-<p>The response is a JSON object with the following properties</p>
-
+<p>Propriedade das colunas</p>
 
 
-
-/***
 <div class="wy-table-responsive" wfd-id="157"><table border="1" class="docutils">
 <colgroup>
 <col width="7%">
@@ -163,4 +159,5 @@ Is null if no filtering for sensor was used in the request.</td>
 </tr>
 </tbody>
 </table></div>
-***/
+
+<a href="https://opensky-network.org/apidoc/rest.html#response"><span class="std std-ref" wfd-id="114">Para mais informações consute a documentação oficial no linkr</span></a>
