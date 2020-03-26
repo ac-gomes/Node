@@ -6,7 +6,7 @@
 #'
 #####################################
 
-#Caso as biblitecas nao estejam instaladas desconmente as linhas abaixo
+#Caso as biblitecas nao estejam instaladas descomente as linhas abaixo
 #packges <-c("httr","jsonlite","plyr","dplyr","stringr","tidyr","tibble","purrr")
 #install.packages(packges)
 
@@ -95,7 +95,7 @@ sources <- paste(getwd(),'dados',sep = "/")
                     mutate(time_position = as.POSIXct(time_position, origin="1970-01-01", tz="America/Sao_Paulo"),
                               last_contact = as.POSIXct(last_contact, origin="1970-01-01", tz="America/Sao_Paulo"))
 
-#'Para gravar o arquivo em CSV desconmente a linha abaixo
+#'Para gravar o arquivo em CSV descomente a linha abaixo
 #'Para carrega os dados ja tranformados no Power BI ou outra ferramenta que tenha integracao com R
 #'Comente a linha abaixo
 write.table(dados.Opensky, file='Opensky_Result.csv', sep=',', dec='.', row.names=FALSE)
