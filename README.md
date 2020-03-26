@@ -160,4 +160,4 @@ Is null if no filtering for sensor was used in the request.</td>
 </tbody>
 </table></div>
 
-<a href="https://opensky-network.org/apidoc/rest.html#response"><span class="std std-ref" wfd-id="114">Para mais informações consute a documentação oficial no linkr</span></a>
+<a href="https://opensky-network.org/apidoc/rest.html#response"><span class="std std-ref" wfd-id="114">Para mais informações consulte a documentação oficial no link</span></a>
