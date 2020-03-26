@@ -20,7 +20,6 @@ library(tidyr)
 library(tibble)
 library(purrr)
 
-
 #----Configurar os diretorios
 
 #Diretorio raiz
@@ -39,8 +38,8 @@ sources <- paste(getwd(),'dados',sep = "/")
   OpenSky.API.Url <- paste0('https://',UserName ,':',key ,URL.Base)
   
   #'Cria um arquivo temporario para escrever os dados
-  #'Solução idal para carregar os dados direto no ambiente do Power BI 
-  #'ou qualquer outra ferramenta que tenha itegração com R
+  #'SoluÃ§Ã£o idal para carregar os dados direto no ambiente do Power BI 
+  #'ou qualquer outra ferramenta que tenha itegraÃ§Ã£o com R
   temp.Json <- tempfile()
   
   #----Baixar os dados
@@ -71,7 +70,7 @@ sources <- paste(getwd(),'dados',sep = "/")
   #Remover coluna time
   dados.Opensky <- dados.Opensky[,-c(1)]
   
-  #----'Construção do titulo da tabela
+  #----'ConstruÃ§Ã£o do titulo da tabela
   #'Titulos foram retirados da documentacao
   titulo <- c('icao24', 'callsign','origin_country', 'time_position', 'last_contact',
               'longitude',	'latitude',	'baro_altitude', 'on_ground',	'velocity','true_track',
@@ -81,7 +80,7 @@ sources <- paste(getwd(),'dados',sep = "/")
   dados.Opensky <- as.data.frame(matrix(dados.Opensky$states, ncol=17, byrow=TRUE))
   names(dados.Opensky) <- titulo
   
-  #Remover o texto list() (list() é equivalente a NULL) dados faltantes, neste caso subistiui por NA
+  #Remover o texto list() (list() Ã© equivalente a NULL) dados faltantes, neste caso subistiui por NA
   dados.Opensky[] <- lapply(dados.Opensky, gsub, pattern= "list\\(\\)", replacement='NA')
   
   #'As colunas (time_position e last_contact) de data de hora estao no formato Unix epoch
