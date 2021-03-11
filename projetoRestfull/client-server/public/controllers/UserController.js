@@ -36,10 +36,7 @@ class UserController {
 
       let userOld = JSON.parse(tr.dataset.user);
 
-      /*Primeiro paramentro cria um novo obj que o resultado da soma dos dois objts.
-      todos os objetos que vão ficando a direita sobrescrevem os que estão a esquerda.
-      No caso os valores em values sobrescrevem os valores em userOld se forem identicos
-       deixando apenas o que é diferente do que já eviste*/
+
       let result = Object.assign({}, userOld, values);
 
       this.getPhoto(this.formUpdateEl).then(
@@ -55,18 +52,19 @@ class UserController {
 
           user.loadFromJSON(result);
 
-          user.save();
+          user.save().then(user =>{
 
-          this.getTr(user, tr);
+            this.getTr(user, tr);
 
-          this.updateCount();
+            this.updateCount();
 
-          this.formUpdateEl.reset();
+            this.formUpdateEl.reset();
 
-          btn.disabled = false;
+            btn.disabled = false;
 
-          this.showPanelCreate();
+            this.showPanelCreate();
 
+          });
       },
       (e) =>{
         console.error(e);
@@ -94,13 +92,16 @@ class UserController {
 
           values.photo = content;
 
-          values.save();
+          values.save().then(user => {
 
-          this.addLine(values);
+            this.addLine(user);
 
-          this.formEl.reset();
+            this.formEl.reset();
 
-          btn.disabled = false;
+            btn.disabled = false;
+
+
+          });
 
       },
       (e) =>{
