@@ -10,7 +10,16 @@ class DropBoxController {
     this.snackBarTitle = this.snackModalEl.querySelector('.mc-snackbar-title');
     this.timeleftEl = this.snackBarTitle.querySelector('.timeleft');
 
+    this.connectFirebase();
     this.initEvents();
+
+  }
+
+
+  connectFirebase(){
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
 
   }
 
