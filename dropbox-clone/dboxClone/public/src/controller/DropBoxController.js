@@ -1,6 +1,9 @@
+
 class DropBoxController {
 
   constructor(){
+
+    this.onSelectionChancge = new Event('selectionChange');
 
     this.btnSendFileEL = document.querySelector('#btn-send-file');
     this.inputFileEL = document.querySelector('#files');
@@ -10,6 +13,10 @@ class DropBoxController {
     this.snackBarTitle = this.snackModalEl.querySelector('.mc-snackbar-title');
     this.timeleftEl = this.snackBarTitle.querySelector('.timeleft');
     this.listFilesEL = document.querySelector('#list-of-files-and-directories');
+
+    this.btnNewFolder = document.querySelector('#btn-new-folder');
+    this.btnRename = document.querySelector('#btn-rename');
+    this.btnDelete = document.querySelector('#btn-delete');
 
 
     this.connectFirebase();
@@ -26,7 +33,54 @@ class DropBoxController {
 
   }
 
+  getSelection(){
+
+    return this.listFilesEL.querySelectorAll('.selected');
+
+  }
+
   initEvents(){
+
+    this.btnRename.addEventListener('click', e=>{
+
+      let li = this.getSelection()[0];
+
+      let file = JSON.parse(li.dataset.file);
+
+      let name = prompt("Renomear Arquivo:", file.name);
+
+      if (name) {
+
+        file.name = name;
+
+        this.getFirebaseRef().child(li.dataset.key).set(file);
+
+      }
+
+    });
+
+    this.listFilesEL.addEventListener('selectionChange', e=>{
+
+      switch (this.getSelection().length){
+
+        case 0:
+          this.btnDelete.style.display ='none';
+          this.btnRename.style.display ='none';
+        break;
+
+        case 1:
+          this.btnDelete.style.display ='block';
+          this.btnRename.style.display ='block';
+        break;
+
+        default:
+          this.btnDelete.style.display ='block';
+          this.btnRename.style.display ='none';
+
+      }
+
+    });
+    //this.onSelectionChancge = new Event('selectionChange');
 
     this.btnSendFileEL.addEventListener('click', event => {
 
@@ -350,6 +404,7 @@ class DropBoxController {
     let li = document.createElement('li');
 
     li.dataset.key = key;
+    li.dataset.file = JSON.stringify(file);
 
     li.innerHTML = `
         ${this.getFileIconView(file)}
@@ -385,6 +440,7 @@ class DropBoxController {
 
     li.addEventListener('click', e=>{
 
+
       if (e.shiftKey) {
 
         let firstLi = this.listFilesEL.querySelector('.selected');
@@ -415,6 +471,8 @@ class DropBoxController {
 
           });
 
+          this.listFilesEL.dispatchEvent(this.onSelectionChancge);
+
           return true;
 
         }
@@ -432,6 +490,8 @@ class DropBoxController {
       }
 
       li.classList.toggle('selected');
+
+      this.listFilesEL.dispatchEvent(this.onSelectionChancge);
 
     });
 
