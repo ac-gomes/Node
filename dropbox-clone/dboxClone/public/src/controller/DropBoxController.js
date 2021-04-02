@@ -26,9 +26,6 @@ class DropBoxController {
     this.initEvents();
 
     this.openFolder();
-
-
-
   }
 
 
@@ -159,9 +156,16 @@ class DropBoxController {
 
         responses.forEach(resp => {
 
-          this.getFirebaseRef().push().set(resp.files['input-file']);
+          this.getFirebaseRef().push().set({
+            name: resp.name,
+            type: resp.contentType,
+            path: resp.customMetadata.downloadURL,
+            size: resp.size
+          });
 
         });
+
+       console.log('responses',responses);
 
         this.uploadComplete();
 
@@ -245,17 +249,52 @@ class DropBoxController {
 
     [...files].forEach(file =>{
 
-      let formData = new FormData();
+      promises.push(new Promise((resolve, reject)=>{
 
-      formData.append('input-file', file );
+        let fileRef = firebase.storage().ref(this.currentFolder.join('/')).child(file.name);
 
-      promises.push(this.ajax('/upload', 'POST', formData, ()=>{
+        let task = fileRef.put(file);
 
-          this.uploadProgress(event, file);
+        task.on('state_changed',snapshot=>{
 
-        }, ()=>{
+          this.uploadProgress({
+            loaded: snapshot.bytesTransferred,
+            total: snapshot.totalBytes
+          }, file);
 
-          this.startUploadTime = Date.now();
+        }, error =>{
+
+          console.error(error);
+          reject(error);
+
+      }, () =>{
+
+        //refazer com async/Await
+        task.snapshot.ref.getDownloadURL().then(downloadURL =>{
+
+          task.snapshot.ref.updateMetadata({ customMetadata: {downloadURL}})
+            .then(metadata=>{
+              resolve(metadata);
+            })
+        }).catch(error =>{
+
+          console.error(error);
+          reject(error);
+
+        });
+
+        //codigo desatualizado da aula
+        // fileRef.getMetadata().then(metadata=>{
+
+        //   resolve(metadata);
+
+        // }).catch(err=>{
+
+        //   reject(err);
+
+        // });
+
+      });
 
       }));
 
